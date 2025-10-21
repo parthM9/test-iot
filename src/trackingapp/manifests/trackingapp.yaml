@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trackingapp
+  labels:
+    app: trackingapp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: trackingapp
+  template:
+    metadata:
+      labels:
+        app: trackingapp
+    spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: trackingapp
+      containers:
+        - name: trackingapp
+          image: freightpeople.azurecr.io/iot/trackingapp:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+            - name: secrets-store-inline
+              mountPath: "/mnt/secrets-store"
+              readOnly: true
+          env:
+            - name: COSMOS_CONNECTION_STRING #env variable to create
+              valueFrom:
+                secretKeyRef:
+                  name: cosmos-rw #k8s secret name. (kubectl get secret). this is auto synced during creation and deletion of the POD
+                  key: cosmos-rw #this must match the kv configuration in the yaml under secretObjects
+            - name: APPINSIGHTS_INSTRUMENTATIONKEY #env variable to create
+              valueFrom:
+                secretKeyRef:
+                  name: app-insights
+                  key: app-insights
+            - name: STORAGE_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: storage-rw
+                  key: storage-rw
+            - name: CARIO_API_GATEWAY_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: cario-api-gateway-token
+                  key: cario-api-gateway-token
+      volumes:
+        - name: secrets-store-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "azure-kvname"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: trackingapp
+spec:
+  type: ClusterIP
+  ports:
+    - port: 3000
+  selector:
+    app: trackingapp

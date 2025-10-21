@@ -1,0 +1,29 @@
+@import '/src/styles/variables';
+// Required
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+.detail-wrapper {
+  & > div {
+    border-left: $border-width solid $border-color;
+    border-right: $border-width solid $border-color;
+    border-bottom: $border-width solid $border-color;
+
+    &:first-of-type {
+      border-top: $border-width solid $border-color;
+    }
+
+    &:nth-of-type(2) {
+      @include media-breakpoint-up(md) {
+        border-top: $border-width solid $border-color;
+      }
+    }
+
+    &:nth-of-type(even) {
+      @include media-breakpoint-up(md) {
+        border-left: 0;
+      }
+    }
+  }
+}

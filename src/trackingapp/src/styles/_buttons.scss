@@ -1,0 +1,17 @@
+.btn {
+  &.btn-primary {
+    color: white;
+  }
+
+  &.btn-link {
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &:focus,
+  &:active {
+    box-shadow: none;
+  }
+}

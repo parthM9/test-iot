@@ -1,0 +1,78 @@
+name: Deploy the IoT API service
+on:
+  workflow_run:
+    workflows: ["Build the Services"]
+    branches: [main]
+    types: [completed]
+
+defaults:
+  run:
+    working-directory: src/services
+
+env:
+  REGISTRY_NAME: freightpeople.azurecr.io
+  CLUSTER_NAME: freightpeople-iot-aks
+  CLUSTER_RESOURCE_GROUP: iot-australiasoutheast
+  NAMESPACE: iot-api
+  APP_NAME: iot/iot-api
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    strategy:
+      max-parallel: 1
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14.x"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+
+      - run: npm run build --if-present
+
+      - name: Docker publish
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ env.REGISTRY_NAME }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+
+      - run: |
+          docker build -f Dockerfile.iot-api . -t ${{ env.REGISTRY_NAME }}/${{ env.APP_NAME }}:${{ github.sha }} -t ${{ env.REGISTRY_NAME }}/${{ env.APP_NAME }}:latest -t ${{ env.REGISTRY_NAME }}/${{ env.APP_NAME }}:v0.1
+          docker push --all-tags ${{ env.REGISTRY_NAME }}/${{ env.APP_NAME }}
+
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.IOTV2_CREDENTIALS }}
+
+      - name: Azure CLI script
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.30.0
+          inlineScript: |
+            az aks get-credentials --resource-group iot-australiasoutheast --name freightpeople-iot-aks
+
+      # Set the target Azure Kubernetes Service (AKS) cluster.
+      - uses: azure/aks-set-context@v3
+        with:
+          cluster-name: ${{ env.CLUSTER_NAME }}
+          resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
+
+      # Create namespace if doesn't exist
+      - run: |
+          kubectl create namespace ${{ env.NAMESPACE }} --dry-run -o json | kubectl apply -f -
+
+      # Deploy app to AKS
+      - uses: azure/k8s-deploy@v1
+        with:
+          manifests: |
+            src/services/manifests/iot-api.yaml
+          images: |
+            ${{ env.REGISTRY_NAME }}/${{ env.APP_NAME }}:${{ github.sha }}
+          namespace: ${{ env.NAMESPACE }}

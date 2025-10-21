@@ -1,0 +1,71 @@
+{
+  "name": "gps",
+  "version": "1.0.0",
+  "description": "GPS location processor",
+  "author": "First Last <first.last@example.com>",
+  "main": "server.js",
+  "scripts": {
+    "start": "node dist/services/location/server.js",
+    "copyshared": "copyfiles -V -f ../common/dist/src/** ./dist/common/src/",
+    "build-ts": "tsc --build",
+    "build": "npm run build-ts && npm run lint",
+    "format": "eslint --fix --ext .ts,.js ./src",
+    "lint": "eslint --ext .ts,.js ./src",
+    "test": "jest --config ./jest.config.js",
+    "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
+    "validate": "npm-run-all validate:*",
+    "validate:lint": "npm run lint",
+    "validate:types": "npm run typecheck"
+  },
+  "dependencies": {
+    "@azure/cosmos": "^3.11.5",
+    "@azure/event-hubs": "^5.5.2",
+    "@azure/eventhubs-checkpointstore-blob": "^1.0.1",
+    "@azure/storage-blob": "^12.6.0",
+    "@azure/storage-queue": "^12.5.0",
+    "applicationinsights": "^2.1.3",
+    "axios": "^0.21.1",
+    "axios-retry": "^3.1.9",
+    "azure-iot-device": "^1.17.4",
+    "azure-iot-device-http": "^1.13.4",
+    "body-parser": "^1.19.0",
+    "express": "^4.16.1",
+    "geolib": "^3.3.1",
+    "moment": "^2.29.1",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/eslint": "^7.2.13",
+    "@types/jest": "^26.0.23",
+    "@types/node": "^15.12.5",
+    "@typescript-eslint/eslint-plugin": "^4.28.0",
+    "@typescript-eslint/parser": "^4.28.0",
+    "copyfiles": "^2.4.1",
+    "eslint": "^7.29.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-security": "^1.4.0",
+    "jest": "^27.0.6",
+    "prettier": "^2.3.2",
+    "ts-jest": "^27.0.3",
+    "ts-node": "^10.0.0",
+    "tslib": "^2.3.0",
+    "typescript": "^4.3.4"
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:security/recommended"
+    ],
+    "plugins": [
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": "error"
+    },
+    "ignorePatterns": "dist/**/*"
+  }
+}

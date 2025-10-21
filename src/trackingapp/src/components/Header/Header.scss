@@ -1,0 +1,10 @@
+header {
+  & > .header-inner > button {
+    width: 52px;
+    height: 52px;
+    transition: .25s;
+    &:active {
+      box-shadow: none !important;
+    }
+  }
+}

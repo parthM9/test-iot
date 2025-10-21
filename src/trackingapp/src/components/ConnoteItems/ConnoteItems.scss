@@ -1,0 +1,24 @@
+$main-menu-width: 800px;
+
+.sidepanel {
+  top: 0;
+  width: 100%;
+  max-width: $main-menu-width;
+  left: -$main-menu-width;
+  transition: .35s;
+  will-change: left;
+  z-index: 11;
+  height: 100%;
+  position: fixed;
+  overflow-x: hidden;
+
+  &.open {
+    left: 0;
+  }
+}
+
+
+.responsive-table {
+  width: 100%;
+  overflow-x: auto;
+}

@@ -1,0 +1,50 @@
+@import '/src/styles/variables';
+@import '~bootstrap/scss/mixins';
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+
+.search-input:focus {
+  box-shadow: none;
+}
+
+.search-button {
+  @include media-breakpoint-up(lg) {
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+}
+
+.search-wrapper {
+  height: 52px;
+  width: 0;
+  right: 1rem;
+  transition: .25s;
+  top: 50%;
+  transform: translateY(-50%);
+  
+  @include media-breakpoint-up(md) {
+    max-width: 450px;
+  }
+
+  @include media-breakpoint-up(lg) {
+    box-shadow: none !important;
+  }
+
+  &.open {
+    width: calc(100% - (52px + 32px + 16px));
+    
+
+    @include media-breakpoint-up(lg) {
+      width: calc(100% - 75px);
+    }
+  }
+}
+
+.search-button {
+  width: 52px;
+  height: 52px;
+  transition: .25s;
+  &:active {
+    box-shadow: none !important;
+  }
+}

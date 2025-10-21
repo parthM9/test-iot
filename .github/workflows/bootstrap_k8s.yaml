@@ -1,0 +1,106 @@
+name: Bootstrap k8s
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "manifests/**"
+      - ".github/workflows/bootstrap_k8s.yaml"
+
+env:
+  CLUSTER_NAME: freightpeople-iot-aks
+  CLUSTER_RESOURCE_GROUP: iot-australiasoutheast
+  EVENTS_NAMESPACE: eventprocessing
+  API_NAMESPACE: iot-api
+  API_IP: 40.127.86.211
+  API_HOSTNAME: freightpeople-iot-api
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1
+    steps:
+      - uses: actions/checkout@v2
+
+      # Set the target Azure Kubernetes Service (AKS) cluster.
+      - name: Login
+        uses: azure/aks-set-context@v1
+        with:
+          creds: "${{ secrets.AZURE_CREDENTIALS }}"
+          cluster-name: ${{ env.CLUSTER_NAME }}
+          resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
+
+      - name: Helm tool installer
+        uses: Azure/setup-helm@v1
+
+      # Create namespace if doesn't exist
+      - name: Create events namespace
+        run: |
+          kubectl create namespace ${{ env.EVENTS_NAMESPACE }} --dry-run -o json | kubectl apply -f -
+
+      - name: Create API namespace
+        run: |
+          kubectl create namespace ${{ env.API_NAMESPACE }} --dry-run -o json | kubectl apply -f -
+
+      # Deploy app to AKS
+      - name: Deploy secrets to event ns
+        uses: azure/k8s-deploy@v1
+        with:
+          manifests: |
+            manifests/secrets.yaml
+          namespace: ${{ env.EVENTS_NAMESPACE }}
+
+      - name: Deploy secrets to API ns
+        uses: azure/k8s-deploy@v1
+        with:
+          manifests: |
+            manifests/secrets.yaml
+          namespace: ${{ env.API_NAMESPACE }}
+
+      - name: Helm - add ingress-nginx repo
+        run: helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+
+      - name: Helm - add jetstack repo
+        run: helm repo add jetstack https://charts.jetstack.io
+
+      - name: Helm - repo update
+        run: helm repo update
+
+      - name: Kubectl - label namespace for cert-manager
+        run: kubectl label --overwrite namespace ${{ env.API_NAMESPACE }} cert-manager.io/disable-validation=true
+
+      - name: Helm - install cert-manager
+        run: >
+          helm upgrade
+          --install cert-manager jetstack/cert-manager
+          --namespace ${{ env.API_NAMESPACE }} 
+          --version v1.3.1
+          --set installCRDs=true
+          --set nodeSelector."beta\.kubernetes\.io/os"=linux
+
+      - name: Helm - install ingress-nginx
+        run: >
+          helm upgrade 
+          --install iot-api-nginx-ingress ingress-nginx/ingress-nginx
+          --namespace ${{ env.API_NAMESPACE }} 
+          --set controller.replicaCount=1
+          --set controller.nodeSelector."beta\.kubernetes\.io/os"=linux
+          --set defaultBackend.nodeSelector."beta\.kubernetes\.io/os"=linux
+          --set controller.admissionWebhooks.patch.nodeSelector."beta\.kubernetes\.io/os"=linux
+          --set controller.service.loadBalancerIP="${{ env.API_IP }}"
+          --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-dns-label-name"="${{ env.API_HOSTNAME }}"
+
+      - name: Deploy - cluster-issuer
+        uses: azure/k8s-deploy@v1
+        with:
+          manifests: |
+            manifests/cluster-issuer.yaml
+          namespace: ${{ env.API_NAMESPACE }}
+
+      - name: Deploy - IoT API ingress
+        uses: azure/k8s-deploy@v1
+        with:
+          manifests: |
+            manifests/iot-api-ingress.yaml
+          namespace: ${{ env.API_NAMESPACE }}

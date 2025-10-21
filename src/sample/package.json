@@ -1,0 +1,57 @@
+{
+  "name": "basic_web_server",
+  "version": "1.0.0",
+  "description": "Node.js on Docker",
+  "author": "First Last <first.last@example.com>",
+  "main": "server.js",
+  "scripts": {
+    "start": "node dist/server.js",
+    "build-ts": "tsc",
+    "build": "npm run build-ts && npm run lint",
+    "format": "eslint --fix --ext .ts,.tsx,.js,.jsx ./src",
+    "lint": "eslint --ext .ts,.tsx,.js,.jsx ./src",
+    "test": "jest --config ./jest.config.js",
+    "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
+    "validate": "npm-run-all validate:*",
+    "validate:lint": "npm run lint",
+    "validate:types": "npm run typecheck"
+  },
+  "dependencies": {
+    "applicationinsights": "^2.1.3",
+    "express": "^4.16.1"
+  },
+  "devDependencies": {
+    "@types/eslint": "^7.2.13",
+    "@types/jest": "^26.0.23",
+    "@types/node": "^15.12.5",
+    "@typescript-eslint/eslint-plugin": "^4.28.0",
+    "@typescript-eslint/parser": "^4.28.0",
+    "eslint": "^7.29.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-security": "^1.4.0",
+    "jest": "^27.0.6",
+    "prettier": "^2.3.2",
+    "ts-jest": "^27.0.3",
+    "ts-node": "^10.0.0",
+    "tslib": "^2.3.0",
+    "typescript": "^4.3.4"
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:security/recommended"
+    ],
+    "plugins": [
+      "prettier",
+      "security"
+    ],
+    "rules": {
+      "prettier/prettier": "error"
+    },
+    "ignorePatterns": "dist/**/*"
+  }
+}

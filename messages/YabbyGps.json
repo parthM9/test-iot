@@ -1,0 +1,228 @@
+[
+  {
+    "deviceId": "YabbyGps202914",
+    "externalDeviceId": "202914",
+    "deviceSerialNumber": "202914",
+    "iotHubEnqueueTime": "2021-06-30T22:50:32.048Z",
+    "systemProperties": {
+      "iothub-connection-device-id": "YabbyGps202914",
+      "iothub-connection-auth-method": "{\"scope\":\"hub\",\"type\":\"sas\",\"issuer\":\"iothub\",\"acceptingIpFilterRule\":null}",
+      "iothub-connection-auth-generation-id": "637513721881718822",
+      "iothub-enqueuedtime": "2021-06-30T22:50:32.048Z",
+      "iothub-message-source": "Telemetry",
+      "x-opt-sequence-number": 1299,
+      "x-opt-offset": "292057800184",
+      "x-opt-enqueued-time": "2021-06-30T22:50:32.673Z",
+      "content-type": {
+        "Value": "application/json; charset=utf-8",
+        "ValueSize": 31
+      },
+      "content-encoding": {
+        "Value": "",
+        "ValueSize": 0
+      }
+    },
+    "properties": {},
+    "processTime": "2021-06-30T22:50:54.595113Z",
+    "data": {
+      "SerNo": 202914,
+      "IMEI": "352753094773130",
+      "ICCID": "89610185002543609229",
+      "ProdId": 73,
+      "FW": "73.2.2.8",
+      "Records": [
+        {
+          "SeqNo": 12524,
+          "Reason": 1,
+          "DateUTC": "2021-06-30 22:50:20",
+          "Fields": [
+            {
+              "GpsUTC": "2021-06-30 19:36:48",
+              "Lat": -33.7088253,
+              "Long": 150.9634316,
+              "Alt": 102,
+              "Spd": 4,
+              "SpdAcc": 8,
+              "Head": 39,
+              "PDOP": 22,
+              "PosAcc": 46,
+              "GpsStat": 3,
+              "FType": 0
+            },
+            {
+              "DIn": 5,
+              "DOut": 0,
+              "DevStat": 3,
+              "FType": 2
+            },
+            {
+              "AnalogueData": {
+                "1": 5219,
+                "3": 1928,
+                "4": 99,
+                "5": 5187
+              },
+              "FType": 6
+            }
+          ]
+        },
+        {
+          "SeqNo": 12525,
+          "Reason": 6,
+          "DateUTC": "2021-06-30 22:50:22",
+          "Fields": [
+            {
+              "GpsUTC": "2021-06-30 22:50:22",
+              "Lat": -33.7089469,
+              "Long": 150.9634459,
+              "Alt": 116,
+              "Spd": 13,
+              "SpdAcc": 6,
+              "Head": 0,
+              "PDOP": 21,
+              "PosAcc": 43,
+              "GpsStat": 3,
+              "FType": 0
+            },
+            {
+              "DIn": 5,
+              "DOut": 0,
+              "DevStat": 3,
+              "FType": 2
+            },
+            {
+              "AnalogueData": {
+                "1": 5219,
+                "3": 1928,
+                "4": 99,
+                "5": 5187
+              },
+              "FType": 6
+            }
+          ]
+        }
+      ]
+    },
+    "locations": [
+      {
+        "Source": 0,
+        "Timestamp": "2021-06-30T19:36:48Z",
+        "Lat": -33.7088253,
+        "Long": 150.9634316,
+        "Accuracy": 46,
+        "Speed": 4,
+        "SpeedAccuracy": 8,
+        "Altitude": 102
+      },
+      {
+        "Source": 0,
+        "Timestamp": "2021-06-30T22:50:22Z",
+        "Lat": -33.7089469,
+        "Long": 150.9634459,
+        "Accuracy": 43,
+        "Speed": 13,
+        "SpeedAccuracy": 6,
+        "Altitude": 116
+      }
+    ],
+    "id": "406b5073-91e5-420d-b56d-5b251e57d51a",
+    "_rid": "ivNHAJZ7ArrDQQAAAAAAAA==",
+    "_self": "dbs/ivNHAA==/colls/ivNHAJZ7Aro=/docs/ivNHAJZ7ArrDQQAAAAAAAA==/",
+    "_etag": "\"11001773-0000-1a00-0000-60dcf54f0000\"",
+    "_attachments": "attachments/",
+    "_ts": 1625093455
+  },
+  {
+    "deviceId": "YabbyGps202914",
+    "externalDeviceId": "202914",
+    "deviceSerialNumber": "202914",
+    "iotHubEnqueueTime": "2021-06-29T06:58:54.91Z",
+    "systemProperties": {
+      "iothub-connection-device-id": "YabbyGps202914",
+      "iothub-connection-auth-method": "{\"scope\":\"hub\",\"type\":\"sas\",\"issuer\":\"iothub\",\"acceptingIpFilterRule\":null}",
+      "iothub-connection-auth-generation-id": "637513721881718822",
+      "iothub-enqueuedtime": "2021-06-29T06:58:54.91Z",
+      "iothub-message-source": "Telemetry",
+      "x-opt-sequence-number": 1290,
+      "x-opt-offset": "292057791584",
+      "x-opt-enqueued-time": "2021-06-29T06:58:55.003Z",
+      "content-type": {
+        "Value": "application/json; charset=utf-8",
+        "ValueSize": 31
+      },
+      "content-encoding": {
+        "Value": "",
+        "ValueSize": 0
+      }
+    },
+    "properties": {},
+    "processTime": "2021-06-29T06:58:55.0469573Z",
+    "data": {
+      "SerNo": 202914,
+      "IMEI": "352753094773130",
+      "ICCID": "89610185002543609229",
+      "ProdId": 73,
+      "FW": "73.2.2.8",
+      "Records": [
+        {
+          "SeqNo": 12510,
+          "Reason": 2,
+          "DateUTC": "2021-06-29 06:58:45",
+          "Fields": [
+            {
+              "GpsUTC": "2021-06-29 06:58:45",
+              "Lat": -33.7089161,
+              "Long": 150.9634378,
+              "Alt": 96,
+              "Spd": 10,
+              "SpdAcc": 10,
+              "Head": 0,
+              "PDOP": 22,
+              "PosAcc": 44,
+              "GpsStat": 3,
+              "FType": 0
+            },
+            {
+              "TT": 0,
+              "Trim": 300,
+              "FType": 15
+            },
+            {
+              "DIn": 4,
+              "DOut": 0,
+              "DevStat": 2,
+              "FType": 2
+            },
+            {
+              "AnalogueData": {
+                "1": 5221,
+                "3": 2111,
+                "4": 99,
+                "5": 5147
+              },
+              "FType": 6
+            }
+          ]
+        }
+      ]
+    },
+    "locations": [
+      {
+        "Source": 0,
+        "Timestamp": "2021-06-29T06:58:45Z",
+        "Lat": -33.7089161,
+        "Long": 150.9634378,
+        "Accuracy": 44,
+        "Speed": 10,
+        "SpeedAccuracy": 10,
+        "Altitude": 96
+      }
+    ],
+    "id": "fa5b7dd5-0528-4a99-b96e-becedb32ea30",
+    "_rid": "ivNHAJZ7Arq6QQAAAAAAAA==",
+    "_self": "dbs/ivNHAA==/colls/ivNHAJZ7Aro=/docs/ivNHAJZ7Arq6QQAAAAAAAA==/",
+    "_etag": "\"0200b385-0000-1a00-0000-60dac4af0000\"",
+    "_attachments": "attachments/",
+    "_ts": 1624949935
+  }
+]

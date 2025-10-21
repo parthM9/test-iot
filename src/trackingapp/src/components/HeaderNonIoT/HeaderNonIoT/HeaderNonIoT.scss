@@ -1,0 +1,31 @@
+@import '/src/styles/variables';
+@import '~bootstrap/scss/mixins';
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+
+.fp-logo {
+  max-width: 150px;
+
+  @include media-breakpoint-up(md) {
+    max-width: 175px;
+  }
+}
+
+.HeaderNonIoT {
+  .header-inner {
+    min-height: 84px;
+  }
+
+  .search-wrapper {
+    box-shadow: none !important;
+    
+    &.open {
+      width: calc(100% - 32px);
+    }
+  }
+
+  .search-button {
+    box-shadow: none !important;
+    border: none !important;
+  }
+}

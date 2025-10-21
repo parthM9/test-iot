@@ -1,0 +1,30 @@
+.search-bg {
+  background-color: rgba(255,255,255,0.8);
+  padding: 200px 2rem;
+}
+
+.tabs {
+  button {
+    margin-bottom: -1px;
+
+    &.active-tab {
+      border-bottom-color: white;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+}
+
+.loading-screen {
+  padding-top: 200px;
+}
+
+.globe-loading {
+  animation: loadingFade 1.25s infinite ease-in-out;
+}
+
+@keyframes loadingFade {
+  0%   { opacity:1; }
+  50%  { opacity:0.2; }
+  100% { opacity:1; }
+}

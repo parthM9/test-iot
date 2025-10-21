@@ -1,0 +1,31 @@
+html, body, #root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+
+body {
+  background-color: $body-bg;
+
+  &.iot {
+    @include media-breakpoint-up(lg) {
+      overflow: hidden;
+    }
+  }
+
+  &.no-scroll {
+    overflow:hidden;
+  }
+}
+
+// All icons by default should be this shade of black
+span.material-icons,
+span.material-icons-outlined {
+  color: #323232;
+}
+
+hr {
+  background-color: #e6e6e6;
+  opacity: 1;
+}

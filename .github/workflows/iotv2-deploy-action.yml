@@ -1,0 +1,38 @@
+name: Build and deploy IoTv2
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/v2/**"
+      - ".github/workflows/iotv2-deploy-action.yaml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "src/v2/**"
+      - ".github/workflows/iotv2-deploy-action.yaml"
+
+defaults:
+  run:
+    working-directory: src/v2/IoTv2
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+
+      # Checkout code
+    - uses: actions/checkout@main
+
+      # Log into Azure
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.IOTV2_CREDENTIALS }}
+
+      # Deploy ARM template
+    - name: Run ARM deploy
+      uses: azure/arm-deploy@v1
+      with:
+        subscriptionId: a8198e17-ec06-4d05-8913-85db363f5622
+        resourceGroupName: IoTv2
+        template: ./ARMTemplates/iot-template.json
+        parameters: ./ARMTemplates/iot-parameters.json

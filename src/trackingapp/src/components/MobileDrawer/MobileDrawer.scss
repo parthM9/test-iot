@@ -1,0 +1,51 @@
+@import '/src/styles/variables';
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/mixins';
+@import '~bootstrap/scss/variables';
+
+.MobileDrawer {
+  bottom: 1rem;
+  padding: 0 1rem;
+  max-width: 500px;
+  min-width: 320px;
+  width: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .MobileDrawer-content::-webkit-scrollbar {
+    display: none;
+  }
+
+  .MobileDrawer-content {
+    height: 0;
+    overflow: hidden;
+    transition: .35s;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+
+    &.open {
+      height: 438px;
+      .MobileDrawer-content-inner {
+        height: 400px;
+      }
+    }
+
+    .MobileDrawer-content-inner {
+      height: 0;
+      transition: .35s;
+    }
+  }
+}
+
+.tabs {
+  button {
+    margin-bottom: -1px;
+
+    &.active-tab {
+      border-bottom-color: white;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+}

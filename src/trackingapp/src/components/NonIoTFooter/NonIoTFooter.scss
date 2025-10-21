@@ -1,0 +1,11 @@
+.NonIoTFooter {
+  color: #c4c4c4;
+
+  a {
+    color: #c4c4c4;
+
+    &:hover {
+      color: darken(#c4c4c4, 10%);
+    }
+  }
+}

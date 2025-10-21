@@ -1,0 +1,23 @@
+// Colors
+$body-bg: #f2f2f2;
+$primary: #f2385a;
+$secondary: #0fbc9d;
+
+$color-off-white: #FCFCFC;
+
+$link-color: $secondary;
+
+$text-muted: #787878;
+
+// Containers
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px,
+  xxl: 1400px
+);
+
+// Fonts
+$font-weight-bold: 600;

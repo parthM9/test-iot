@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: location-service
+  labels:
+    app: location
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: location
+  template:
+    metadata:
+      labels:
+        app: location
+    spec:
+      containers:
+        - name: location
+          image: freightpeople.azurecr.io/iot/location:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: secrets-store-inline
+              mountPath: "/mnt/secrets-store"
+              readOnly: true
+          env:
+            - name: COSMOS_CONNECTION_STRING #env variable to create
+              valueFrom:
+                secretKeyRef:
+                  name: cosmos-rw #k8s secret name. (kubectl get secret). this is auto synced during creation and deletion of the POD
+                  key: cosmos-rw #this must match the kv configuration in the yaml under secretObjects
+            - name: APPINSIGHTS_INSTRUMENTATIONKEY #env variable to create
+              valueFrom:
+                secretKeyRef:
+                  name: app-insights
+                  key: app-insights
+            - name: IOTHUB_DEFAULT_ENDPOINT_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: iothub-default-endpoint
+                  key: iothub-default-endpoint
+            - name: STORAGE_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: storage-rw
+                  key: storage-rw
+            - name: CARIO_API_GATEWAY_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: cario-api-gateway-token
+                  key: cario-api-gateway-token
+      volumes:
+        - name: secrets-store-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "azure-kvname"

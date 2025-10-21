@@ -1,0 +1,43 @@
+name: Build the Services
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/services/**"
+      - ".github/workflows/pr_build_services.yaml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "src/services/**"
+      - ".github/workflows/pr_build_services.yaml"
+
+defaults:
+  run:
+    working-directory: src/services
+
+env:
+  REGISTRY_NAME: freightpeople.azurecr.io
+  CLUSTER_NAME: freightpeople-iot-aks
+  CLUSTER_RESOURCE_GROUP: iot-australiasoutheast
+  NAMESPACE: eventprocessing
+  APP_NAME: iot/ingester
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14.x"
+          cache: "npm"
+
+      - run: npm ci
+      - run: npm run build --if-present
+
+      - name: Test
+        run: npm test

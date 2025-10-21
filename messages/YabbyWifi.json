@@ -1,0 +1,107 @@
+[
+  {
+    "deviceId": "YabbyWifi_00001",
+    "deviceSerialNumber": 181347,
+    "iotHubEnqueueTime": "2019-11-14T20:27:02.448Z",
+    "systemProperties": {
+      "iothub-connection-device-id": "YabbyWifi_00001",
+      "iothub-connection-auth-method": "{\"scope\":\"hub\",\"type\":\"sas\",\"issuer\":\"iothub\",\"acceptingIpFilterRule\":null}",
+      "iothub-connection-auth-generation-id": "637078174106106349",
+      "iothub-enqueuedtime": "2019-11-14T20:27:02.448Z",
+      "iothub-message-source": "Telemetry",
+      "x-opt-sequence-number": 26,
+      "x-opt-offset": "26576",
+      "x-opt-enqueued-time": "2019-11-14T20:27:02.557Z"
+    },
+    "properties": {},
+    "processTime": "2019-11-14T20:27:24.7130178Z",
+    "data": {
+      "SerNo": 181347,
+      "IMEI": "352753092930476",
+      "ICCID": "89610185002543609229",
+      "ProdId": 72,
+      "FW": "72.2.2.2",
+      "Records": [
+        {
+          "SeqNo": 215,
+          "Reason": 11,
+          "DateUTC": "2019-11-14 20:26:46",
+          "Fields": [
+            {
+              "APs": [
+                {
+                  "MAC": "9C:3D:CF:1A:EA:4E",
+                  "Sig": -33,
+                  "Ch": 13
+                },
+                {
+                  "MAC": "9C:3D:CF:40:36:00",
+                  "Sig": -71,
+                  "Ch": 6
+                },
+                {
+                  "MAC": "A4:71:74:75:48:3C",
+                  "Sig": -74,
+                  "Ch": 6
+                },
+                {
+                  "MAC": "F8:AB:05:AB:35:5F",
+                  "Sig": -74,
+                  "Ch": 5
+                },
+                {
+                  "MAC": "24:20:C7:F9:42:A8",
+                  "Sig": -90,
+                  "Ch": 6
+                },
+                {
+                  "MAC": "80:3F:5D:6C:C5:4B",
+                  "Sig": -94,
+                  "Ch": 13
+                },
+                {
+                  "MAC": "08:3E:5D:1A:E8:F2",
+                  "Sig": -94,
+                  "Ch": 1
+                }
+              ],
+              "FType": 25
+            },
+            {
+              "Towers": [
+                {
+                  "CID": 135941133,
+                  "LAC": 12398,
+                  "MCC": 505,
+                  "MNC": 1
+                }
+              ],
+              "FType": 28
+            },
+            {
+              "DIn": 4,
+              "DOut": 0,
+              "DevStat": 2,
+              "FType": 2
+            },
+            {
+              "AnalogueData": {
+                "1": 4797,
+                "3": 1592,
+                "4": 99,
+                "5": 4704
+              },
+              "FType": 6
+            }
+          ]
+        }
+      ]
+    },
+    "id": "2f70bf89-7b4b-4e19-a7ae-9cf9d5c993b4",
+    "_rid": "ivNHAJZ7ArrBAAAAAAAAAA==",
+    "_self": "dbs/ivNHAA==/colls/ivNHAJZ7Aro=/docs/ivNHAJZ7ArrBAAAAAAAAAA==/",
+    "_etag": "\"10000203-0000-1a00-0000-5dcdb8ad0000\"",
+    "_attachments": "attachments/",
+    "_ts": 1573763245
+  }
+]

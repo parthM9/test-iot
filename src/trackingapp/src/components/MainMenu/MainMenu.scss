@@ -1,0 +1,15 @@
+$main-menu-width: 320px;
+
+.main-menu {
+  top: 0;
+  width: $main-menu-width;
+  max-width: 100%;
+  left: -$main-menu-width;
+  transition: .35s;
+  will-change: left;
+  z-index: 10;
+
+  &.open {
+    left: 0;
+  }
+}

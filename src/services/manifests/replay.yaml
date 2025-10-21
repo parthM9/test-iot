@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: replay-service
+  labels:
+    app: replay
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: replay
+  template:
+    metadata:
+      labels:
+        app: replay
+    spec:
+      containers:
+        - name: replay
+          image: freightpeople.azurecr.io/iot/replay:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: secrets-store-inline
+              mountPath: "/mnt/secrets-store"
+              readOnly: true
+          env:
+            - name: COSMOS_CONNECTION_STRING #env variable to create
+              valueFrom:
+                secretKeyRef:
+                  name: cosmos-rw #k8s secret name. (kubectl get secret). this is auto synced during creation and deletion of the POD
+                  key: cosmos-rw #this must match the kv configuration in the yaml under secretObjects
+            - name: APPINSIGHTS_INSTRUMENTATIONKEY #env variable to create
+              valueFrom:
+                secretKeyRef:
+                  name: app-insights
+                  key: app-insights
+            - name: IOTHUB_DEVICE_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: iothub-device-connection-string
+                  key: iothub-device-connection-string
+      volumes:
+        - name: secrets-store-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "azure-kvname"

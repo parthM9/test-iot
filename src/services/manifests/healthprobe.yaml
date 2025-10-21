@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: healthprobe-service
+  labels:
+    app: healthprobe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: healthprobe
+  template:
+    metadata:
+      labels:
+        app: healthprobe
+    spec:
+      containers:
+        - name: healthprobe
+          image: freightpeople.azurecr.io/iot/healthprobe:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: secrets-store-inline
+              mountPath: "/mnt/secrets-store"
+              readOnly: true
+          env:
+            - name: APPINSIGHTS_INSTRUMENTATIONKEY #env variable to create
+              valueFrom:
+                secretKeyRef:
+                  name: app-insights
+                  key: app-insights
+            - name: IOTHUB_DEVICE_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: iothub-device-connection-string
+                  key: iothub-device-connection-string
+      volumes:
+        - name: secrets-store-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "azure-kvname"
